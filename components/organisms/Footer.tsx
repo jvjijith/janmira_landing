@@ -14,7 +14,7 @@ export function Footer() {
 
                 <div className="mb-12">
                     <a
-                        href="https://instagram.com"
+                        href="https://www.instagram.com/janmira.in/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 text-white hover:border-gold hover:text-gold transition-all duration-300"

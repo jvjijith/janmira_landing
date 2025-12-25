@@ -21,14 +21,14 @@ export function Navbar() {
         <nav
             className={cn(
                 "fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 transition-all duration-500",
-                scrolled ? "bg-black/90 backdrop-blur-md py-3 border-b border-white/10" : "bg-transparent"
+                scrolled ? "bg-black/90 backdrop-blur-md py-3" : "bg-transparent"
             )}
         >
             <Link href="/" className="relative z-10 block">
                 {/* Placeholder for small logo if needed, or just text if main logo is in hero */}
-                <div className={cn("relative w-32 h-10 transition-opacity duration-300", scrolled ? "opacity-100" : "opacity-0 invisible")}>
+                <div className={cn("relative w-32 h-12 transition-opacity duration-300", scrolled ? "opacity-100" : "opacity-0 invisible")}>
                     <Image
-                        src="/janmira-logo.png"
+                        src="/logo.png"
                         alt="JANMIRA"
                         fill
                         className="object-contain"
