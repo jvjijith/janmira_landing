@@ -3,9 +3,8 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { CountdownTimer } from "@/components/molecules/CountdownTimer";
 import { Button } from "@/components/atoms/Button";
-import { InstagramIcon } from "@/components/atoms/InstagramIcon";
+import { ArrowDown } from "lucide-react";
 
 export function HeroSection() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -13,9 +12,12 @@ export function HeroSection() {
     const y1 = useTransform(scrollY, [0, 500], [0, 200]);
     const y2 = useTransform(scrollY, [0, 500], [0, 100]);
 
-    // Set launch date to 10 days from now for demo
-    const launchDate = new Date('2025-12-25T23:59:59');
-    launchDate.setDate(launchDate.getDate() + 10);
+    const scrollToCollection = () => {
+        const instagramSection = document.getElementById("instagram-gallery");
+        if (instagramSection) {
+            instagramSection.scrollIntoView({ behavior: "smooth" });
+        }
+    };
 
     return (
         <div ref={containerRef} className="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-transparent">
@@ -63,27 +65,19 @@ export function HeroSection() {
                 </motion.div>
 
                 <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.8, duration: 1 }}
-                    className="mt-8"
-                >
-                    <p className="text-white uppercase tracking-[0.2em] text-xs mb-8">Launching In</p>
-                    <CountdownTimer targetDate={launchDate.toISOString()} />
-                </motion.div>
-
-                <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1, duration: 0.8 }}
-                    className="mt-12"
+                    className="mt-8"
                 >
-                    <a href="https://www.instagram.com/janmira.in/" target="_blank" rel="noopener noreferrer">
-                        <Button variant="outline" className="gap-3 group">
-                            <InstagramIcon className="w-4 h-4" />
-                            Follow Our Journey
-                        </Button>
-                    </a>
+                    <Button
+                        variant="outline"
+                        className="gap-3 group px-8 py-4 text-base"
+                        onClick={scrollToCollection}
+                    >
+                        <span>View Our Collection</span>
+                        <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform" />
+                    </Button>
                 </motion.div>
             </div>
 
@@ -97,3 +91,4 @@ export function HeroSection() {
         </div>
     );
 }
+

@@ -3,6 +3,7 @@
 import { Navbar } from "@/components/molecules/Navbar";
 import { HeroSection } from "@/components/organisms/HeroSection";
 import { FeaturesSection } from "@/components/organisms/FeaturesSection";
+import { InstagramGallery } from "@/components/organisms/InstagramGallery";
 import { BrandStory } from "@/components/organisms/BrandStory";
 import { Footer } from "@/components/organisms/Footer";
 
@@ -12,8 +13,10 @@ export function LandingTemplate() {
             <Navbar />
             <HeroSection />
             <FeaturesSection />
+            <InstagramGallery />
             <BrandStory />
             <Footer />
         </div>
     );
 }
+
