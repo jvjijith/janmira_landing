@@ -24,35 +24,87 @@ interface InstagramPost {
     timestamp: string;
 }
 
-// Video Post Component with autoplay on hover
+// Video Post Component with mobile tap interactions
 function VideoPost({ post, onHover }: { post: InstagramPost; onHover: (hovering: boolean) => void }) {
     const videoRef = useRef<HTMLVideoElement>(null);
     const [isPlaying, setIsPlaying] = useState(false);
+    const lastTap = useRef<number>(0);
+    const tapTimeout = useRef<NodeJS.Timeout | null>(null);
 
     const handleMouseEnter = () => {
-        onHover(true);
-        if (videoRef.current) {
-            videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {
-                // Autoplay might be blocked or failed
-                setIsPlaying(false);
-            });
+        // Desktop hover behavior
+        if (window.matchMedia("(hover: hover)").matches) {
+            onHover(true);
+            if (videoRef.current) {
+                videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {
+                    setIsPlaying(false);
+                });
+            }
         }
     };
 
     const handleMouseLeave = () => {
-        onHover(false);
-        setIsPlaying(false);
-        if (videoRef.current) {
-            videoRef.current.pause();
-            videoRef.current.currentTime = 0;
+        // Desktop hover behavior
+        if (window.matchMedia("(hover: hover)").matches) {
+            onHover(false);
+            setIsPlaying(false);
+            if (videoRef.current) {
+                videoRef.current.pause();
+                videoRef.current.currentTime = 0;
+            }
         }
     };
+
+    const handleMobileClick = (e: React.MouseEvent) => {
+        // Check if device is mobile/touch (simplified check or use matchMedia)
+        const isMobile = window.matchMedia("(max-width: 768px)").matches || window.matchMedia("(pointer: coarse)").matches;
+
+        if (!isMobile) return; // Let desktop click bubble to parent anchor
+
+        e.preventDefault();
+        e.stopPropagation(); // Stop parent anchor navigation
+
+        const currentTime = new Date().getTime();
+        const tapLength = currentTime - lastTap.current;
+
+        // Double Tap Detection (< 300ms)
+        if (tapLength < 300 && tapLength > 0) {
+            if (tapTimeout.current) clearTimeout(tapTimeout.current);
+            // Navigate to Instagram
+            window.open(post.permalink, "_blank");
+        } else {
+            // Single Tap Detection
+            if (tapTimeout.current) clearTimeout(tapTimeout.current);
+            tapTimeout.current = setTimeout(() => {
+                // Play/Pause Video
+                if (videoRef.current) {
+                    if (videoRef.current.paused) {
+                        videoRef.current.play().then(() => setIsPlaying(true)).catch(() => { });
+                        onHover(true); // Pause slider
+                    } else {
+                        videoRef.current.pause();
+                        setIsPlaying(false);
+                        onHover(false); // Resume slider
+                    }
+                }
+            }, 300); // 300ms delay to wait for potential double tap
+        }
+        lastTap.current = currentTime;
+    };
+
+    // Cleanup timeout
+    useEffect(() => {
+        return () => {
+            if (tapTimeout.current) clearTimeout(tapTimeout.current);
+        };
+    }, []);
 
     return (
         <div
             className="relative w-full h-full"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
+            onClick={handleMobileClick}
         >
             {/* Thumbnail/poster image - only hide when actually playing */}
             <div className={`absolute inset-0 z-10 transition-opacity duration-300 ${isPlaying ? "opacity-0" : "opacity-100"}`}>
