@@ -24,7 +24,7 @@ export function FeaturesSection() {
     ];
 
     return (
-        <section className="py-24 px-6 md:px-12 bg-[#050505]">
+        <section id="collections" className="py-24 px-6 md:px-12 bg-[#050505]">
             <div className="max-w-7xl mx-auto">
                 <SectionTitle
                     title="The Janmira Touch"

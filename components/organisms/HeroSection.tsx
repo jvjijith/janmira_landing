@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/atoms/Button";
@@ -8,6 +8,7 @@ import { ArrowDown } from "lucide-react";
 
 export function HeroSection() {
     const containerRef = useRef<HTMLDivElement>(null);
+    const [isVideoLoaded, setIsVideoLoaded] = useState(false);
     const { scrollY } = useScroll();
     const y1 = useTransform(scrollY, [0, 500], [0, 200]);
     const y2 = useTransform(scrollY, [0, 500], [0, 100]);
@@ -20,19 +21,39 @@ export function HeroSection() {
     };
 
     return (
-        <div ref={containerRef} className="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-transparent">
+        <div ref={containerRef} className="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-black">
             {/* Background with Parallax */}
             <motion.div
                 style={{ y: y1 }}
                 className="absolute inset-0 z-0"
             >
-                <Image
-                    src="https://images.unsplash.com/photo-1573408301185-9146fe634ad0?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8amV3ZWxsZXJ5fGVufDB8fDB8fHww"
-                    alt="Luxury Background"
-                    fill
-                    className="object-cover opacity-60"
-                    priority
-                />
+                {/* Fallback Image - Visible only when video hasn't loaded */}
+                <div className={`absolute inset-0 transition-opacity duration-1000 ${isVideoLoaded ? 'opacity-0' : 'opacity-100'}`}>
+                    <Image
+                        src="https://images.unsplash.com/photo-1573408301185-9146fe634ad0?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8amV3ZWxsZXJ5fGVufDB8fDB8fHww"
+                        alt="Luxury Background"
+                        fill
+                        className="object-cover opacity-60"
+                        priority
+                    />
+                </div>
+
+                {/* Video Layer */}
+                <video
+                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${isVideoLoaded ? 'opacity-60' : 'opacity-0'}`}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    onLoadedData={() => setIsVideoLoaded(true)}
+                >
+                    {/* Primary source based on user instruction (even if currently empty in dir listing, prioritization) */}
+                    <source src="/video/hero.mp4" type="video/mp4" />
+                    {/* Secondary source found in public root */}
+                    <source src="/14766445_1920_1080_24fps.mp4" type="video/mp4" />
+                </video>
+
+                {/* Dark Gradient Overlay for text readability */}
                 <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-green-950/20 to-black z-10" />
             </motion.div>
 
@@ -91,4 +112,3 @@ export function HeroSection() {
         </div>
     );
 }
-

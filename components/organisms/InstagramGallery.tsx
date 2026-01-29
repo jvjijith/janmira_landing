@@ -331,7 +331,7 @@ export function InstagramGallery() {
                                     <div className="flex flex-col gap-1">
                                         <span className="text-white/60 text-xs">Swipe Up/Down to browse</span>
                                     </div>
-                                    <a href={currentPost.permalink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-white/10 backdrop-blur px-4 py-2 rounded-full border border-white/10 text-white text-sm">
+                                    <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-white/10 backdrop-blur px-4 py-2 rounded-full border border-white/10 text-white text-sm">
                                         <InstagramIcon className="w-4 h-4" />
                                         <span>View on App</span>
                                     </a>

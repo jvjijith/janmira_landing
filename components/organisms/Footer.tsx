@@ -7,9 +7,9 @@ export function Footer() {
                 <h3 className="font-serif text-3xl mb-8 tracking-widest">JANMIRA</h3>
 
                 <div className="flex gap-8 mb-12">
-                    <a href="#" className="text-zinc-500 hover:text-gold transition-colors text-sm uppercase tracking-widest">Collection</a>
-                    <a href="#" className="text-zinc-500 hover:text-gold transition-colors text-sm uppercase tracking-widest">Story</a>
-                    <a href="#" className="text-zinc-500 hover:text-gold transition-colors text-sm uppercase tracking-widest">Contact</a>
+                    <a href="#collections" className="text-zinc-500 hover:text-gold transition-colors text-sm uppercase tracking-widest">Collection</a>
+                    <a href="#story" className="text-zinc-500 hover:text-gold transition-colors text-sm uppercase tracking-widest">Story</a>
+                    <a href="https://ig.me/m/janmira.in" target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-gold transition-colors text-sm uppercase tracking-widest">Contact</a>
                 </div>
 
                 <div className="mb-12">

@@ -6,7 +6,7 @@ import { SectionTitle } from "@/components/atoms/SectionTitle";
 
 export function BrandStory() {
     return (
-        <section className="relative w-full min-h-[80vh] flex flex-col md:flex-row bg-zinc-950">
+        <section id="story" className="relative w-full min-h-[80vh] flex flex-col md:flex-row bg-zinc-950">
             {/* Left Column: Image */}
             <motion.div
                 initial={{ opacity: 0, x: -50 }}
